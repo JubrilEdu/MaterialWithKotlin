@@ -55,6 +55,21 @@ class MainActivity : AppCompatActivity() {
         product_list.layoutManager = LinearLayoutManager(this)
         adapter = ProductAdapter(products, imageRequester)
         product_list.adapter = adapter
+
+        bottom_navigation.setOnNavigationItemSelectedListener {
+            val layoutManager = product_list.layoutManager as LinearLayoutManager
+            layoutManager.scrollToPositionWithOffset(0, 0)
+            shuffleProducts()
+            true
+        }
+        bottom_navigation.setOnNavigationItemReselectedListener {
+            val layoutManager = product_list.layoutManager as LinearLayoutManager
+            layoutManager.scrollToPositionWithOffset(0, 0)
+        }
+
+        if (savedInstanceState == null) {
+            bottom_navigation.selectedItemId = R.id.category_home
+        }
     }
 
 
@@ -83,6 +98,12 @@ class MainActivity : AppCompatActivity() {
             return ArrayList()
         }
 
+    }
+
+    private fun shuffleProducts() {
+        val products = readProductsList()
+        Collections.shuffle(products)
+        adapter?.setProducts(products)
     }
 
     private class ProductAdapter internal constructor(private var products: List<ProductEntry>, private val imageRequester: ImageRequester) : RecyclerView.Adapter<ProductViewHolder>() {
