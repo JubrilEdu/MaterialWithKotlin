@@ -18,6 +18,7 @@ package io.material.demo.codelab.buildingbeautifulapps
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -52,7 +53,7 @@ class MainActivity : AppCompatActivity() {
 
 
         product_list.setHasFixedSize(true)
-        product_list.layoutManager = LinearLayoutManager(this)
+        product_list.layoutManager = GridLayoutManager(this, 2)
         adapter = ProductAdapter(products, imageRequester)
         product_list.adapter = adapter
 
